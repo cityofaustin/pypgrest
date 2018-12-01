@@ -19,13 +19,12 @@ $ pip install pypgrest
         "limit" : 100
     }
 
->>> data = pgrest.select(params)
-
+>>> pgrest.select(params)
 [{ "name" : "al pastor", "tortilla" : "corn", "cost" : "$2.00" }, ... ]
 
 # you can inspect the `Requests` response object like so
 >>> pgrest.res.status_code
-200
+201
 ```
 
 ## License
