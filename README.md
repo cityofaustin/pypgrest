@@ -19,8 +19,14 @@ $ pip install pypgrest
         "limit" : 100
     }
 
+# Supported methods are select, insert, update, and upsert
 >>> pgrest.select(params)
-[{ "name" : "al pastor", "tortilla" : "corn", "cost" : "$2.00" }, ... ]
+[{ "name" : "al pastor", "tortilla" : "corn", "cost" : "2.01" }, ... ]
+
+>>> payload = [{ "id" : 23, "cost" : "2.25" }, { "id" : 26, "cost" : "1.25" }]
+
+>>> pgrest.upsert(payload)
+[{ "id" : 23, "cost" : "2.25", "name" : "al pastor", ... }, ... ]
 
 # you can inspect the `Requests` response object like so
 >>> pgrest.res.status_code
