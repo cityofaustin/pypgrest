@@ -12,18 +12,14 @@ $ pip install pypgrest
 
 >>> pgrest = Postgrest("https://api.tacos.com", auth="secretsalsa")
 
-'''
-See postgrest docs for support query params
-'''
+# See postgrest docs for supported query params
 >>> params = {
         "select" : "name,tortilla,cost",
         "tortilla" : "is.corn",
         "limit" : 100
     }
 
-'''
-Supported methods are select, insert, update, and upsert
-'''
+# Supported methods are select, insert, update, and upsert
 >>> pgrest.select(params=params)
 [{ "name" : "al pastor", "tortilla" : "corn", "cost" : "2.01" }, ... ]
 
@@ -32,16 +28,12 @@ Supported methods are select, insert, update, and upsert
 >>> pgrest.upsert(payload)
 [{ "id" : 23, "cost" : "2.25", "name" : "al pastor", ... }, ... ]
 
-'''
-You can inspect the `Requests` response object like so:
-'''
+# You can inspect the `Requests` response object like so:
 >>> pgrest.res.status_code
 201
 
-'''
-If results are paginated the client will continue to request until the specified
-limit (default 1000) is met.
-'''
+# If results are paginated the client will continue to request until the specified
+# limit (default 1000) is met.
 >>> pgrest.select(params={"limit" : 1000})
 ```
 
