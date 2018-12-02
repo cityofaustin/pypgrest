@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pypgrest",
-    version="0.0.1",
+    version="0.0.2",
     author="City of Austin",
     author_email="transportation.data@austintexas.gov",
     description="A python client for interacting with PostgREST APIs.",

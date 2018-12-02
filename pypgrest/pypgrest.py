@@ -89,10 +89,10 @@ class Postgrest(object):
             TYPE: List 
         """
         limit = params.setdefault('limit', 1000)
-        params.setdefault('offset', 0)
 
-        if increment < limit:
-            params['limit'] = increment
+        params['limit'] = increment
+
+        params.setdefault('offset', 0)
 
         records = []
 
@@ -103,7 +103,7 @@ class Postgrest(object):
 
             records += self.res.json()
 
-            if len(self.res.json()) < increment or len(records) >= limit or not pagination:
+            if not self.res.json() or len(records) >= limit or not pagination:
                 return records[0:limit]
             else:
-                params['offset'] += increment
+                params['offset'] += len(self.res.json())
