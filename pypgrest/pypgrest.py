@@ -104,6 +104,6 @@ class Postgrest(object):
             records += self.res.json()
 
             if not self.res.json() or len(records) >= limit or not pagination:
-                return records[0:limit]
+                return records
             else:
                 params['offset'] += len(self.res.json())
