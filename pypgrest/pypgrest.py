@@ -5,18 +5,6 @@ import math
 import requests
 
 
-def get_metadata(client, app_id):
-    """A helper func which fetches an app's metadata based on the provided app_id str"""
-    results = client.select(
-        "knack_metadata",
-        params={"app_id": f"eq.{app_id}", "limit": 1},
-        pagination=False,
-    )
-    if results:
-        return results[0]["metadata"]
-    return None
-
-
 class Postgrest(object):
     """Class to interact with PostgREST"""
 
