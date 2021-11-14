@@ -23,7 +23,7 @@ $ pip install pypgrest
         "order": "name"
     }
 
-# Supported methods are select, insert, update, and upsert
+# Supported methods are select, insert, update, upsert, and delete
 >>> client.select(resource="menu", params=params, pagination=True, headers=None)
 # [{ "name" : "al pastor", "tortilla" : "corn", "cost" : "2.01" }, ... ]
 
@@ -42,12 +42,20 @@ $ pip install pypgrest
 The client is initialized with `Content-Type=application/json` and (if you supply a token) `Authorization` headers. You can supply additional headers on construction, or per request.
 
 ```python
->>> client = Postgrest("https://api.tacos.com", token="secretsalsa", headers={"Prefer": "return=representation"})
+>>> client = Postgrest(
+    "https://api.tacos.com",
+    token="secretsalsa", 
+    headers={"Prefer": "return=representation"}
+)
 
 >>> client.headers
 # {"Content-Type": 'application/json', 'Authorization': 'Bearer secretsalsa', 'Prefer': 'return=representation'}
 
->>> client.insert(resource="menu", data={"id": 5, "name": "barbacoa"} headers={"Prefer": "return=headers-only"})
+>>> client.insert(
+    resource="menu",
+    data={"id": 5, "name": "barbacoa"},
+    headers={"Prefer": "return=headers-only"}
+)
 
 ```
 
