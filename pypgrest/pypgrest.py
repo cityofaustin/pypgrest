@@ -8,14 +8,17 @@ import requests
 class Postgrest(object):
     """Class to interact with PostgREST"""
 
-    def __init__(self, url, token=None):
+    def __init__(self, url, token=None, headers=None):
         self.token = token
         self.url = url
         self.default_headers = {"Content-Type": "application/json"}
         if self.token:
             self.default_headers["Authorization"] = f"Bearer {self.token}"
+        if headers:
+            self.default_headers.update(headers)
 
     def _make_request(self, *, resource, method, headers, params=None, data=None):
+        self.res = None
         url = f"{self.url}/{resource}"
         req = requests.Request(
             method,
@@ -26,12 +29,12 @@ class Postgrest(object):
         )
         prepped = req.prepare()
         session = requests.Session()
-        res = session.send(prepped)
-        res.raise_for_status()
+        self.res = session.send(prepped)
+        self.res.raise_for_status()
         try:
-            return res.json()
+            return self.res.json()
         except json.JSONDecodeError:
-            return res.text
+            return self.res.text
 
     def _get_request_headers(self, headers):
         """Update the instance's default request headers with any provided by the user
@@ -80,7 +83,7 @@ class Postgrest(object):
         )
 
     def select(
-        self, resource, params=None, pagination=True, headers=None, order_by=None
+        self, *, resource, params=None, pagination=True, headers=None,
     ):
         """Fetch selected records from PostgREST. See documentation for horizontal
         and vertical filtering at http://postgrest.org/.
@@ -104,11 +107,10 @@ class Postgrest(object):
         params = {} if not params else params
         limit = params.get("limit", math.inf)
         params.setdefault("offset", 0)
-        params["order"] = order_by
 
-        if pagination and not order_by:
+        if pagination and not params.get("order"):
             raise ValueError(
-                "It's not reliable to paginate requests without specifying an 'order_by' field"
+                "It's unsafe to paginate requests without specifying an 'order' param"
             )
 
         records = []
