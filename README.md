@@ -65,6 +65,13 @@ By default, the client will paginate requests until all records have been retrie
 
 You can disable pagination with `pagination=False`, in which case the record limit will be capped by your API's [`max-rows`](https://postgrest.org/en/v8.0/configuration.html#max-rows) setting. 
 
+## Development
+
+We use Github Actions to publish to PyPI. The workflows are defined in .github/workflows.
+
+Any commit/merge to the dev branch will trigger a PyPI publication to the knackpy-dev package. Any *release* on the master branch will trigger publication to the knackpy package on PyPI. Note that PyPI publications will fail if don’t bump the version number in setup.py.
+
+
 ## License
 
 As a work of the City of Austin, this project is in the public domain within the United States.
