@@ -75,7 +75,7 @@ class Postgrest(object):
         en masse. Read the PostgREST docs."""
         if not params and not force:
             raise Exception(
-                "You must supply parameters with delete requests. This is for your own protection."  # noqa E501
+                "You must supply parameters with delete requests. This is for your own protection. Using force=True will override this warning"  # noqa E501
             )
         headers = self._get_request_headers(headers)
         return self._make_request(
