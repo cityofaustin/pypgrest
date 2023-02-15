@@ -45,7 +45,7 @@ def build_config(env, readme="README.md"):
         "name": package_name,
         "packages": setuptools.find_packages(),
         "url": "http://github.com/cityofaustin/pypgrest",
-        "version": "0.1.0",
+        "version": "0.2.0",
     }
 
 

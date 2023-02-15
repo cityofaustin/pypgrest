@@ -70,10 +70,10 @@ class Postgrest(object):
             resource=resource, method="post", headers=headers, data=data
         )
 
-    def delete(self, resource, params=None, headers=None):
+    def delete(self, resource, params=None, headers=None, force=False):
         """This method is dangerous! It is possible to delete and modify records
         en masse. Read the PostgREST docs."""
-        if not params:
+        if not params and not force:
             raise Exception(
                 "You must supply parameters with delete requests. This is for your own protection."  # noqa E501
             )
@@ -83,7 +83,12 @@ class Postgrest(object):
         )
 
     def select(
-        self, *, resource, params=None, pagination=True, headers=None,
+        self,
+        *,
+        resource,
+        params=None,
+        pagination=True,
+        headers=None,
     ):
         """Fetch selected records from PostgREST. See documentation for horizontal
         and vertical filtering at http://postgrest.org/.
